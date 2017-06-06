@@ -21,6 +21,7 @@ public interface Java8Interface {
 
     /**
      * Call like all statis methods: Classname.method();
+     * Can not be overridden.
      */
     static double pow(double number, double pow) {
         return Math.pow(number, pow);
