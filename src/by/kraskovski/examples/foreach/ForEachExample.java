@@ -1,4 +1,4 @@
-package by.kraskovski.foreach;
+package by.kraskovski.examples.foreach;
 
 import java.util.ArrayList;
 import java.util.List;
