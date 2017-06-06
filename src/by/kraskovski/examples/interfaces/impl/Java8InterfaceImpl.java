@@ -1,8 +1,8 @@
 package by.kraskovski.examples.interfaces.impl;
 
-import by.kraskovski.examples.interfaces.Car;
+import by.kraskovski.examples.interfaces.Java8Interface;
 
-public class CarImpl implements Car{
+public class Java8InterfaceImpl implements Java8Interface{
 
     @Override
     public void info() {
