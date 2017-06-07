@@ -2,17 +2,23 @@ package by.kraskovski.examples.stream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class StreamExample {
 
-    public static void main(String... args) {
-        List<Integer> integerList = new ArrayList<>();
+    private static List<Integer> integerList;
+    private static List<String> stringList;
+
+    static {
+        integerList = new ArrayList<>();
         for (int index = 0; index < 100; index++) {
             integerList.add(index);
         }
+    }
 
-        List<String> stringList = new ArrayList<>();
+    static {
+        stringList = new ArrayList<>();
         stringList.add("ddd2");
         stringList.add("aaa2");
         stringList.add("bbb1");
@@ -21,16 +27,19 @@ public class StreamExample {
         stringList.add("ccc");
         stringList.add("bbb2");
         stringList.add("ddd1");
-
-//        mainFeatures(integerList);
-//        filterExample(stringList);
-//        sortedExample(stringList);
-//        mapExample(stringList);
-//        matchExample(stringList);
-
     }
 
-    private static void mainFeatures(List<Integer> integerList) {
+    public static void main(String... args) {
+//        mainFeatures();
+//        filterExample();
+//        sortedExample();
+//        mapExample();
+//        matchExample();
+//        countExample();
+//        reduceExample();
+    }
+
+    private static void mainFeatures() {
         //Sequential stream
         Stream<Integer> sequentialStream = integerList.stream();
 
@@ -53,14 +62,14 @@ public class StreamExample {
         highNumbersSequential.forEach(integer -> System.out.println("Sequential high number: " + integer));
     }
 
-    private static void filterExample(List<String> stringList) {
+    private static void filterExample() {
         stringList
                 .stream()
                 .filter(s -> s.startsWith("a"))
                 .forEach(System.out::println);
     }
 
-    private static void sortedExample(List<String> stringList) {
+    private static void sortedExample() {
         stringList
                 .stream()
                 .sorted() //stringList still mutable
@@ -68,7 +77,7 @@ public class StreamExample {
                 .forEach(System.out::println);
     }
 
-    private static void mapExample(List<String> stringList) {
+    private static void mapExample() {
         stringList
                 .stream()
                 .map(String::toUpperCase)
@@ -77,7 +86,7 @@ public class StreamExample {
 
     }
 
-    private static void matchExample(List<String> stringList) {
+    private static void matchExample() {
         boolean anyStartsWithA =
                 stringList
                         .stream()
@@ -95,5 +104,23 @@ public class StreamExample {
                         .stream()
                         .noneMatch(s -> s.startsWith("z"));
         System.out.println(noneStartsWithZ);
+    }
+
+    private static void countExample() {
+        long startsWithA =
+                stringList
+                        .stream()
+                        .filter(s -> s.startsWith("a"))
+                        .count();
+        System.out.println(startsWithA);
+    }
+
+    private static void reduceExample() {
+        Optional<String> reduced =
+                stringList
+                        .stream()
+                        .sorted()
+                        .reduce((s, s2) -> s + "#" + s2);
+        reduced.ifPresent(System.out::print);
     }
 }
