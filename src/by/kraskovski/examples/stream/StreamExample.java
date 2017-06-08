@@ -1,17 +1,15 @@
 package by.kraskovski.examples.stream;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
  * Stream lifecycle goes on 3 steps:
-
- - Creating stream
- - Use some operations with stream (filter, order...)
- - Final terminal operation and returning the result.
-
+ * <p>
+ * - Creating stream
+ * - Use some operations with stream (filter, order...)
+ * - Final terminal operation and returning the result.
  */
 public class StreamExample {
 
@@ -43,16 +41,19 @@ public class StreamExample {
         phoneList.add(new Phone("iPhone 6 S", 54000));
         phoneList.add(new Phone("Lumia 950", 45000));
         phoneList.add(new Phone("Samsung Galaxy S 6", 40000));
+        phoneList.add(new Phone("LG G 4", 32000));
     }
 
     public static void main(String... args) {
 //        mainFeatures();
 //        filterExample();
 //        sortedExample();
-        mapExample();
+//        mapExample();
 //        matchExample();
 //        countExample();
 //        reduceExample();
+//        skipAndLimitExample();
+        collectExample();
     }
 
     private static void mainFeatures() {
@@ -145,6 +146,46 @@ public class StreamExample {
                         .stream()
                         .sorted()
                         .reduce((s, s2) -> s + "#" + s2);
-        reduced.ifPresent(System.out::print);
+        reduced.ifPresent(System.out::println);
+
+        long sum = phoneList
+                .stream()
+                .reduce(0, (phone, phone2) -> {
+                    if (phone2.getPrice() < 50000) {
+                        return phone + phone2.getPrice();
+                    } else {
+                        return phone;
+                    }
+                }, (phone, phone2) -> phone + phone2);
+        System.out.println(sum);
+    }
+
+    private static void skipAndLimitExample() {
+        phoneList
+                .stream()
+                .skip(1)
+                .limit(3)
+                .forEach(System.out::println);
+    }
+
+    /**
+     * toList()
+     * toSet()
+     * toMap()
+     */
+    private static void collectExample() {
+        Set<Phone> filteredPhoneSet = phoneList
+                .stream()
+                .filter(phone -> phone.getPrice() < 50000)
+                //.collect(Collectors.toSet());
+                .collect(Collectors.toCollection(HashSet::new));
+        filteredPhoneSet
+                .forEach(System.out::println);
+
+        Map<String, Integer> filteredPhoneMap = phoneList
+                .stream()
+                .filter(phone -> phone.getPrice() < 50000)
+                .collect(Collectors.toMap(Phone::getName, Phone::getPrice));
+        filteredPhoneMap.forEach((s, integer) -> System.out.println("KEY:" + s + ", VALUE:" + integer));
     }
 }
