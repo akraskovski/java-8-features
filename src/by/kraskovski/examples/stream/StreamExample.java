@@ -5,10 +5,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * Stream lifecycle goes on 3 steps:
+
+ - Creating stream
+ - Use some operations with stream (filter, order...)
+ - Final terminal operation and returning the result.
+
+ */
 public class StreamExample {
 
     private static List<Integer> integerList;
     private static List<String> stringList;
+    private static List<Phone> phoneList;
 
     static {
         integerList = new ArrayList<>();
@@ -29,11 +38,18 @@ public class StreamExample {
         stringList.add("ddd1");
     }
 
+    static {
+        phoneList = new ArrayList<>();
+        phoneList.add(new Phone("iPhone 6 S", 54000));
+        phoneList.add(new Phone("Lumia 950", 45000));
+        phoneList.add(new Phone("Samsung Galaxy S 6", 40000));
+    }
+
     public static void main(String... args) {
 //        mainFeatures();
 //        filterExample();
 //        sortedExample();
-//        mapExample();
+        mapExample();
 //        matchExample();
 //        countExample();
 //        reduceExample();
@@ -67,6 +83,11 @@ public class StreamExample {
                 .stream()
                 .filter(s -> s.startsWith("a"))
                 .forEach(System.out::println);
+
+        phoneList
+                .stream()
+                .filter(phone -> phone.getPrice() < 50000)
+                .forEach(System.out::println);
     }
 
     private static void sortedExample() {
@@ -83,7 +104,10 @@ public class StreamExample {
                 .map(String::toUpperCase)
                 .forEach(System.out::println);
 
-
+        phoneList
+                .stream()
+                .map(phone -> "Phone model: " + phone.getName() + ", Price: " + phone.getPrice())
+                .forEach(System.out::println);
     }
 
     private static void matchExample() {
