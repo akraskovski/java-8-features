@@ -1,8 +1,9 @@
-package by.kraskovski.examples.interfaces;
+package by.kraskovski.examples.interfaces.methods;
 
 public interface Java8Interface {
 
     ///////////////////Default methods//////////////////////
+
     /**
      * Classes can override.
      * Interface may contain more than 1 default method.
