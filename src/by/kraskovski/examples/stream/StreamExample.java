@@ -53,7 +53,7 @@ public class StreamExample {
 //        countExample();
 //        reduceExample();
 //        skipAndLimitExample();
-        collectExample();
+//        collectExample();
     }
 
     private static void mainFeatures() {
@@ -96,6 +96,11 @@ public class StreamExample {
                 .stream()
                 .sorted() //stringList still mutable
                 .filter(s -> s.startsWith("a"))
+                .forEach(System.out::println);
+
+        phoneList
+                .stream()
+                .sorted(new PhoneComparator())
                 .forEach(System.out::println);
     }
 

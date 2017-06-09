@@ -1,5 +1,7 @@
 package by.kraskovski.examples.stream;
 
+import java.util.Comparator;
+
 public class Phone {
 
     private String name;
@@ -32,5 +34,12 @@ public class Phone {
                 "name='" + name + '\'' +
                 ", price=" + price +
                 '}';
+    }
+}
+
+class PhoneComparator implements Comparator<Phone> {
+    @Override
+    public int compare(Phone o1, Phone o2) {
+        return o1.getName().toUpperCase().compareTo(o2.getName().toUpperCase());
     }
 }
