@@ -1,5 +1,7 @@
 package by.kraskovski.examples.optional;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class OptionalExample {
@@ -10,7 +12,9 @@ public class OptionalExample {
         ifPresent();
         orElse();
         orElseThrow();
-
+        get();
+        withFilter();
+        withMap();
     }
 
     private static void optionalTypes() {
@@ -47,5 +51,64 @@ public class OptionalExample {
     private static void get() {
         Optional<String> value = Optional.of("string");
         String result = value.get();
+    }
+
+    private static void withFilter() {
+        Integer year = 2016;
+        Optional<Integer> yearOptional = Optional.of(year);
+        boolean is2016 = yearOptional.filter(y -> y == 2016).isPresent();
+        System.out.println(is2016);
+        boolean is2017 = yearOptional.filter(y -> y == 2017).isPresent();
+        System.out.println(is2017);
+
+        System.out.println(priceIsInRange(new Modem(10.5)));
+    }
+
+    private static boolean priceIsInRange(Modem modem2) {
+        return Optional.ofNullable(modem2)
+                .map(Modem::getPrice)
+                .filter(p -> p >= 10)
+                .filter(p -> p <= 15)
+                .isPresent();
+    }
+
+    private static void withMap() {
+        List<String> companyNames = Arrays.asList(
+                "paypal", "oracle", "", "microsoft", "", "apple");
+        Optional<List<String>> listOptional = Optional.of(companyNames);
+        int size = listOptional
+                .map(List::size)
+                .orElse(0);
+        System.out.println(size);
+
+        /////////////////////////////////////////////
+
+        String password = " password ";
+        Optional<String> passOpt = Optional.of(password);
+        boolean correctPassword = passOpt.filter(
+                pass -> pass.equals("password")).isPresent();
+        System.out.println(correctPassword);
+
+        correctPassword = passOpt
+                .map(String::trim)
+                .filter(pass -> pass.equals("password"))
+                .isPresent();
+        System.out.println((correctPassword));
+    }
+}
+
+class Modem {
+    private Double price;
+
+    Modem(Double price) {
+        this.price = price;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
