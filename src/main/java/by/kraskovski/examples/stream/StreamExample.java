@@ -1,5 +1,6 @@
 package by.kraskovski.examples.stream;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -102,6 +103,30 @@ public class StreamExample {
                 .stream()
                 .sorted(new PhoneComparator())
                 .forEach(System.out::println);
+    }
+
+    private static void findFirstExample() {
+        stringList
+                .stream()
+                .findFirst() //return Optional
+                .ifPresent(System.out::println);
+    }
+
+    private static void mathOperationsExample() {
+        final int[] array = new int [] {1, 2, 3};
+
+        //Old realization of find average.
+        int sum = 0;
+        for (int item : array) {
+            sum += 2 * item + 1;
+        }
+        System.out.println("Average: " + sum / array.length);
+
+        //Stream average.
+        Arrays.stream(array)
+                .map(item -> item * 2 + 1)
+                .average()
+                .ifPresent(System.out::println);
     }
 
     private static void mapExample() {
