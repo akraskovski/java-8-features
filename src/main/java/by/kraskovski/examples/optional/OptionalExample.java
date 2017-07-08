@@ -96,19 +96,3 @@ public class OptionalExample {
         System.out.println((correctPassword));
     }
 }
-
-class Modem {
-    private Double price;
-
-    Modem(Double price) {
-        this.price = price;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-}
