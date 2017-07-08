@@ -113,7 +113,7 @@ public class StreamExample {
     }
 
     private static void mathOperationsExample() {
-        final int[] array = new int [] {1, 2, 3};
+        final int[] array = new int[]{1, 2, 3};
 
         //Old realization of find average.
         int sum = 0;
@@ -217,5 +217,47 @@ public class StreamExample {
                 .filter(phone -> phone.getPrice() < 50000)
                 .collect(Collectors.toMap(Phone::getName, Phone::getPrice));
         filteredPhoneMap.forEach((s, integer) -> System.out.println("KEY:" + s + ", VALUE:" + integer));
+    }
+
+    private static void orderOfOperations() {
+        //1st case.
+        Stream.of("d2", "a2", "b1", "b3", "c")
+                .map(s -> {
+                    System.out.println("map: " + s);
+                    return s.toUpperCase();
+                })
+                .filter(s -> {
+                    System.out.println("filter: " + s);
+                    return s.startsWith("A");
+                })
+                .forEach(s -> System.out.println("forEach: " + s));
+
+        //2nd case.
+        Stream.of("d2", "a2", "b1", "b3", "c")
+                .filter(s -> {
+                    System.out.println("filter: " + s);
+                    return s.startsWith("a");
+                })
+                .map(s -> {
+                    System.out.println("map: " + s);
+                    return s.toUpperCase();
+                })
+                .forEach(s -> System.out.println("forEach: " + s));
+
+        //3rd case.
+        Stream.of("d2", "a2", "b1", "b3", "c")
+                .sorted((s1, s2) -> {
+                    System.out.printf("sort: %s; %s\n", s1, s2);
+                    return s1.compareTo(s2);
+                })
+                .filter(s -> {
+                    System.out.println("filter: " + s);
+                    return s.startsWith("a");
+                })
+                .map(s -> {
+                    System.out.println("map: " + s);
+                    return s.toUpperCase();
+                })
+                .forEach(s -> System.out.println("forEach: " + s));
     }
 }
