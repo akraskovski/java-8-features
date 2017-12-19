@@ -101,7 +101,7 @@ public class StreamExample {
 
         phoneList
                 .stream()
-                .sorted(new PhoneComparator())
+                .sorted(Comparator.comparing(o -> o.getName().toUpperCase()))
                 .forEach(System.out::println);
     }
 

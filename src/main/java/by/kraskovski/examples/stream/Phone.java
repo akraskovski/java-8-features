@@ -1,15 +1,15 @@
 package by.kraskovski.examples.stream;
 
-import java.util.Comparator;
+import java.util.Objects;
 
 public class Phone {
 
     private String name;
     private int price;
 
-    public Phone(String name, int price){
-        this.name=name;
-        this.price=price;
+    public Phone(String name, int price) {
+        this.name = name;
+        this.price = price;
     }
 
     public String getName() {
@@ -29,17 +29,24 @@ public class Phone {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Phone phone = (Phone) o;
+        return price == phone.price &&
+                Objects.equals(name, phone.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price);
+    }
+
+    @Override
     public String toString() {
         return "Phone{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
                 '}';
-    }
-}
-
-class PhoneComparator implements Comparator<Phone> {
-    @Override
-    public int compare(Phone o1, Phone o2) {
-        return o1.getName().toUpperCase().compareTo(o2.getName().toUpperCase());
     }
 }
