@@ -2,14 +2,18 @@ package by.kraskovski.examples.stream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Stream lifecycle goes on 3 steps:
@@ -45,8 +49,10 @@ public class StreamExample {
 
     static {
         phoneList = new ArrayList<>();
-        phoneList.add(Phone.builder().setName("iPhone 6 S").setPrice(54000).build());
-        phoneList.add(Phone.builder().setName("Lumia 950").setPrice(45000).build());
+        phoneList.add(Phone.builder().setName("iPhone 6 S").setPrice(54000)
+                .setManufactures(Arrays.asList("Belarus", "Russia")).build());
+        phoneList.add(Phone.builder().setName("Lumia 950").setPrice(45000)
+                .setManufactures(Arrays.asList("USA", "Germany")).build());
         phoneList.add(Phone.builder().setName("Samsung Galaxy S 6").setPrice(40000).build());
         phoneList.add(Phone.builder().setName("LG G 4").setPrice(32000).build());
     }
@@ -56,6 +62,7 @@ public class StreamExample {
 //        filterExample();
 //        sortedExample();
 //        mapExample();
+        flatMapExample();
 //        matchExample();
 //        countExample();
 //        reduceExample();
@@ -145,6 +152,19 @@ public class StreamExample {
                 .stream()
                 .map(phone -> "Phone model: " + phone.getName() + ", Price: " + phone.getPrice())
                 .forEach(System.out::println);
+    }
+
+    // It usually uses when we have List with inner collections.
+    // The map() method wraps the underlying sequence in a Stream<R> instance,
+    //      whereas the flatMap() method allows avoiding nested Stream<Stream<R>> structure.
+    private static void flatMapExample() {
+        //get all phones manufactures in one list: List<Phone> -> List<String>
+        List<String> manufactures = phoneList.stream()
+                .map(Phone::getManufactures)
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .collect(toList());
+        System.out.println(manufactures);
     }
 
     private static void matchExample() {

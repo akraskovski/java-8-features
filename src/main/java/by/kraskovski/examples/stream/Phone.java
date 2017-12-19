@@ -17,6 +17,10 @@ public class Phone {
         return price;
     }
 
+    public List<String> getManufactures() {
+        return manufactures;
+    }
+
     public static Builder builder() {
         return new Phone().new Builder();
     }
