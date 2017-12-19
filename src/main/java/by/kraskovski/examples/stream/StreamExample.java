@@ -1,7 +1,13 @@
 package by.kraskovski.examples.stream;
 
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,10 +45,10 @@ public class StreamExample {
 
     static {
         phoneList = new ArrayList<>();
-        phoneList.add(new Phone("iPhone 6 S", 54000));
-        phoneList.add(new Phone("Lumia 950", 45000));
-        phoneList.add(new Phone("Samsung Galaxy S 6", 40000));
-        phoneList.add(new Phone("LG G 4", 32000));
+        phoneList.add(Phone.builder().setName("iPhone 6 S").setPrice(54000).build());
+        phoneList.add(Phone.builder().setName("Lumia 950").setPrice(45000).build());
+        phoneList.add(Phone.builder().setName("Samsung Galaxy S 6").setPrice(40000).build());
+        phoneList.add(Phone.builder().setName("LG G 4").setPrice(32000).build());
     }
 
     public static void main(String... args) {
